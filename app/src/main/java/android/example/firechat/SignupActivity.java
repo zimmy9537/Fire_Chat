@@ -1,13 +1,13 @@
 package android.example.firechat;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -48,6 +48,7 @@ public class SignupActivity extends AppCompatActivity {
     public ActivityResultLauncher<Intent> resultLauncher;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
+    private ProgressDialog progressDialog;
     private String imageURI;// todo this will be the part of the new model class
 
     @Override
@@ -63,21 +64,27 @@ public class SignupActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("please Wait....");
+        progressDialog.setCancelable(false);
 
 
         signUp.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 final String name = name_et.getText().toString().trim();
                 final String email = email_et.getText().toString().trim();
                 final String password = password_et.getText().toString().trim();
                 String emailPattern = ("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(SignupActivity.this, "email or password can not be empty", Toast.LENGTH_SHORT).show();
+                    progressDialog.hide();
                     return;
                 } else if (!email.matches(emailPattern)) {
                     Toast.makeText(SignupActivity.this, "Not a valid email", Toast.LENGTH_SHORT).show();
+                    progressDialog.hide();
                     return;
                 }
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -101,45 +108,53 @@ public class SignupActivity extends AppCompatActivity {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
+                                                                progressDialog.dismiss();
                                                                 Toast.makeText(SignupActivity.this, "SignedUp Successfully", Toast.LENGTH_SHORT).show();
                                                                 Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                                                                 startActivity(intent);
+                                                                finish();
                                                             } else if (task.isCanceled()) {
                                                                 Toast.makeText(SignupActivity.this, "Task cancelled", Toast.LENGTH_SHORT).show();
+                                                                progressDialog.hide();
                                                             } else if (!task.isComplete()) {
                                                                 Toast.makeText(SignupActivity.this, "Task completed", Toast.LENGTH_SHORT).show();
+                                                                progressDialog.hide();
                                                             } else {
                                                                 Toast.makeText(SignupActivity.this, "here", Toast.LENGTH_SHORT).show();
+                                                                progressDialog.hide();
                                                             }
                                                         }
                                                     });
                                                 }
                                             });
                                         } else {
-                                            //todo task not successful
+                                            progressDialog.hide();
                                             Toast.makeText(SignupActivity.this, "Task unsuccessful", Toast.LENGTH_SHORT).show();
                                             Log.e(LOGTAG, "task exception " + task.getException());
                                         }
                                     }
                                 });
                             } else {
-                                //todo image not null
                                 imageURI = "https://firebasestorage.googleapis.com/v0/b/fire-chat-4dad3.appspot.com/o/user.png?alt=media&token=712b7bd1-8993-4833-ab2a-8ad8163515eb";
                                 Users users = new Users(auth.getUid(), name, email, imageURI);
                                 databaseReference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
+                                            progressDialog.dismiss();
                                             Toast.makeText(SignupActivity.this, "SignedUp successfully", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                                             startActivity(intent);
+                                            finish();
                                         } else {
+                                            progressDialog.hide();
                                             Toast.makeText(SignupActivity.this, "error while signUp", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                             }
                         } else {
+                            progressDialog.hide();
                             email_et.setError("Please Enter Valid Email");
                             Toast.makeText(SignupActivity.this, "Error Occurred while Sign Up", Toast.LENGTH_SHORT).show();
                             Log.e(LOGTAG, "error noted here is :- " + task.getException());
@@ -176,6 +191,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

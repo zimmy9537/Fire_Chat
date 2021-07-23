@@ -49,6 +49,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 });
                 Intent intent=new Intent(ForgotPasswordActivity.this,LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
