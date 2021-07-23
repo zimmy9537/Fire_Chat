@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#E65100</color>
+    <color name="colorAccent">#2E7D32</color>
+    <color name="colorTitle">#ffffff</color>
+    <color name="myColorPrimary">#0336FF</color>
+    <color name="myNotificationColor">#5A54FF</color>
+    <color name="myWhite">#FFFF</color>
+    <color name="black">#000000</color>
+    <color name="themeColor">#000000</color>
+</resources>

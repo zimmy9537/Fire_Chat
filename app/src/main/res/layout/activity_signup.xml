@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignupActivity"
+    android:background="@color/myWhite">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/create_account"
+            android:textColor="@color/themeColor"
+            android:textSize="32sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/image_signup"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_signup"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/person_id"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/name_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/log_in_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/image_signup">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/person"/>
+
+        <EditText
+            android:id="@+id/name_signup_ET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/name"
+            android:paddingLeft="10dp"
+            android:textColorHint="@color/themeColor"
+            android:textColor="@color/themeColor"
+            android:textSize="@dimen/initial_buttons" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/email_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/log_in_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/name_signup">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/email"/>
+        <EditText
+            android:id="@+id/email_signup_ET"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/email"
+            android:textColorHint="@color/themeColor"
+            android:textColor="@color/themeColor"
+            android:textSize="@dimen/initial_buttons" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/password_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/log_in_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/email_signup">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/password"/>
+        <EditText
+            android:id="@+id/password_signup_ET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginLeft="10dp"
+            android:hint="@string/password"
+            android:textColor="@color/themeColor"
+            android:textColorHint="@color/themeColor"
+            android:textSize="@dimen/initial_buttons" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/signUp_ll_signUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/themeColor"
+        android:background="@drawable/log_in_edit_text"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/password_signup">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/sign_up"
+            android:textColor="@color/myWhite"
+            android:textSize="@dimen/initial_buttons" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/login_ll_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/themeColor"
+        android:background="@drawable/log_in_edit_text"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_ll_signUp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/log_in"
+            android:textColor="@color/myWhite"
+            android:textSize="@dimen/initial_buttons" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
