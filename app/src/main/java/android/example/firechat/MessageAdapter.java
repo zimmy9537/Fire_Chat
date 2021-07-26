@@ -4,68 +4,86 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 
-import com.bumptech.glide.Glide;
+import java.util.ArrayList;
 
-import java.util.List;
+public class MessageAdapter extends RecyclerView.Adapter {
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
-    private Context context;
-    private List<FriendlyMessage> messageList;
+    Context context;
+    ArrayList<Message> messageArrayList;
 
-    public MessageAdapter(Context context, List<FriendlyMessage> messageList) {
+    public MessageAdapter(Context context, ArrayList<Message> messageArrayList) {
         this.context = context;
-        this.messageList = messageList;
+        this.messageArrayList = messageArrayList;
     }
+
+    int ITEM_SEND = 1;
+    int ITEM_RECEIVE = 2;
+
 
     @NonNull
     @Override
-    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.item_message, parent, false);
-        return new MessageViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //this maybe doubtful here what is being done?
+        //u can see a parameter as viewType. this viewType we get from the function getItemViewType().
+        //this returns the values as 1 or 2 as it is defined in the method
+        if (viewType == 1) {
+            View view = LayoutInflater.from(context).inflate(R.layout.sender_message_item, parent, false);
+            return new SenderViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(context).inflate(R.layout.receiver_message_item, parent, false);
+            return new ReceiverViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        FriendlyMessage friendlyMessage = messageList.get(position);
-        boolean isPhoto = friendlyMessage.getPhotoUrl() != null;
-        if (isPhoto)// photo is present.
-        {
-            holder.messageTextView.setVisibility(View.GONE);
-            holder.photoImageView.setVisibility(View.VISIBLE);
-            Glide.with(holder.photoImageView.getContext())
-                    .load(friendlyMessage.getPhotoUrl())
-                    .into(holder.photoImageView);
-        } else {// this is when the photo is not present
-            holder.messageTextView.setVisibility(View.VISIBLE);
-            holder.photoImageView.setVisibility(View.GONE);
-            holder.messageTextView.setText(friendlyMessage.getText());
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Message message = messageArrayList.get(position);
+        if (holder.getClass() == SenderViewHolder.class) {
+            SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
+            senderViewHolder.senderText.setText(message.getMessage());
+        } else {
+            ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
+            receiverViewHolder.receiverText.setText(message.getMessage());
         }
-        holder.authorTextView.setText(friendlyMessage.getName());
     }
 
     @Override
     public int getItemCount() {
-        return messageList.size();
+        return messageArrayList.size();
     }
 
-    public class MessageViewHolder extends RecyclerView.ViewHolder {
-        ImageView photoImageView;
-        TextView messageTextView;
-        TextView authorTextView;
+    @Override
+    public int getItemViewType(int position) {
+        Message messages = messageArrayList.get(position);
+        if (FirebaseAuth.getInstance().getUid().equals(messages.getSenderId())) {
+            return ITEM_SEND;
+        } else {
+            return ITEM_RECEIVE;
+        }
+    }
 
-        public MessageViewHolder(@NonNull View itemView) {
+    class SenderViewHolder extends RecyclerView.ViewHolder {
+        private TextView senderText;
+
+        public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
-            photoImageView = itemView.findViewById(R.id.photoImageView);
-            messageTextView = itemView.findViewById(R.id.messageTextView);
-            authorTextView = itemView.findViewById(R.id.nameTextView);
+            senderText = itemView.findViewById(R.id.sender_message);
+        }
+    }
+
+    class ReceiverViewHolder extends RecyclerView.ViewHolder {
+        private TextView receiverText;
+
+        public ReceiverViewHolder(@NonNull View itemView) {
+            super(itemView);
+            receiverText = itemView.findViewById(R.id.receiver_message);
         }
     }
 }

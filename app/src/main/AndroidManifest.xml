@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FireChat">
+        <activity android:name=".ChatActivity"></activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".InitialActivity" />
         <activity android:name=".EntryActivity">

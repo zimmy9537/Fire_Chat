@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -64,14 +65,13 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.show();
-                if (emailLogin.toString().isEmpty() || passwordLogin.toString().isEmpty()) {
+                String email=emailLogin.getText().toString().trim();
+                String password=passwordLogin.getText().toString().trim();
+                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                     Toast.makeText(LoginActivity.this, "email or password can not be empty", Toast.LENGTH_SHORT).show();
-                    progressDialog.hide();
                     return;
                 }
-                String email = emailLogin.getText().toString().trim();
-                String password = passwordLogin.getText().toString().trim();
+                progressDialog.show();
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -82,10 +82,11 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                         } else {
                             Toast.makeText(LoginActivity.this, "Error while Login", Toast.LENGTH_SHORT).show();
-                            progressDialog.hide();
+                            progressDialog.dismiss();
                         }
                     }
                 });
+                progressDialog.dismiss();
             }
         });
 
