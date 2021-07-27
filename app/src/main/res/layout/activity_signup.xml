@@ -67,11 +67,12 @@
             android:id="@+id/name_signup_ET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:fontFamily="sans-serif-light"
             android:hint="@string/name"
             android:paddingLeft="10dp"
-            android:textColorHint="@color/themeColor"
             android:textColor="@color/themeColor"
+            android:textColorHint="@color/themeColor"
             android:textSize="@dimen/initial_buttons" />
     </LinearLayout>
 
@@ -98,6 +99,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:hint="@string/email"
+            android:maxLines="1"
             android:textColorHint="@color/themeColor"
             android:textColor="@color/themeColor"
             android:textSize="@dimen/initial_buttons" />
@@ -125,6 +127,7 @@
             android:fontFamily="sans-serif-light"
             android:layout_marginLeft="10dp"
             android:hint="@string/password"
+            android:maxLines="1"
             android:textColor="@color/themeColor"
             android:textColorHint="@color/themeColor"
             android:textSize="@dimen/initial_buttons" />

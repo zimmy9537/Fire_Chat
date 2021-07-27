@@ -1,15 +1,15 @@
 package android.example.firechat;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -17,10 +17,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     Context context;
     ArrayList<Message> messageArrayList;
+    String senderUid;
 
-    public MessageAdapter(Context context, ArrayList<Message> messageArrayList) {
+    public MessageAdapter(Context context, ArrayList<Message> messageArrayList, String senderUid) {
         this.context = context;
         this.messageArrayList = messageArrayList;
+        if (messageArrayList == null) {
+            Toast.makeText(context, "messageArraylist is empty", Toast.LENGTH_SHORT).show();
+        }
+        this.senderUid = senderUid;
     }
 
     int ITEM_SEND = 1;
@@ -62,7 +67,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message messages = messageArrayList.get(position);
-        if (FirebaseAuth.getInstance().getUid().equals(messages.getSenderId())) {
+        Log.d(ChatActivity.class.getSimpleName(), "we got guffed up here");
+        if (senderUid == null) {
+            Log.d(ChatActivity.class.getSimpleName(), "senderID is null");
+            return 1;
+        } else if (messages.getSenderId() == null) {//todo here is the problem.
+            Log.d(ChatActivity.class.getSimpleName(), "senderID is null 2");
+            return 1;
+        }
+        if (messages.getSenderId().trim().equals(senderUid.trim())) {
             return ITEM_SEND;
         } else {
             return ITEM_RECEIVE;

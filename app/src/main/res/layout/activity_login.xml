@@ -61,6 +61,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:hint="@string/email"
+            android:maxLines="1"
             android:paddingLeft="10dp"
             android:textColorHint="@color/themeColor"
             android:textColor="@color/themeColor"
@@ -89,6 +90,7 @@
             android:fontFamily="sans-serif-light"
             android:layout_marginLeft="10dp"
             android:hint="@string/password"
+            android:maxLines="1"
             android:textColorHint="@color/themeColor"
             android:textColor="@color/themeColor"
             android:textSize="@dimen/initial_buttons" />

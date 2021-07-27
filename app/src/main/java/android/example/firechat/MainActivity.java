@@ -1,10 +1,11 @@
 package android.example.firechat;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,26 +29,27 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FirebaseAuth auth;
+    private ProgressBar progressBar;
     private RecyclerView personRecyclerView;
     private FirebaseDatabase database;
     private PeoplesAdapter adapter;
     List<Users> usersList;
-    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("please wait...");
-        progressDialog.setCancelable(false);// this will make sure that back button does not cancel the progressDialog
-        progressDialog.show();
+
+        progressBar = findViewById(R.id.progress_main_layout);
+        progressBar.setVisibility(View.VISIBLE);
+
         setUpToolBar();
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
         usersList = new ArrayList<>();
+
 
         DatabaseReference reference = database.getReference().child("user");
 
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         personRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PeoplesAdapter(MainActivity.this, usersList);
         personRecyclerView.setAdapter(adapter);
-        progressDialog.dismiss();
+        progressBar.setVisibility(View.GONE);
     }
 
     private void setUpToolBar() {

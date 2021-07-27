@@ -70,42 +70,35 @@ public class ChatActivity extends AppCompatActivity {
         receiverNameTextView = findViewById(R.id.receiverNameChat);
         sendButton = findViewById(R.id.sendButton);
         messageEditText = findViewById(R.id.messageEditText);
-        senderUid = firebaseAuth.getUid();
-        messageArrayList=new ArrayList<>();
-        chatRecyclerView=findViewById(R.id.chatRecyclerView);
-
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
-        chatRecyclerView.setLayoutManager(linearLayoutManager);
-        messageAdapter=new MessageAdapter(ChatActivity.this,messageArrayList);
-        chatRecyclerView.setAdapter(messageAdapter);
+        senderUid = firebaseAuth.getCurrentUser().getUid();
+        messageArrayList = new ArrayList<>();
+        chatRecyclerView = findViewById(R.id.chatRecyclerView);
 
 
         //getIntents
-        ReceiverName = getIntent().getStringExtra("ReciverName");
-        ReceiverImage = getIntent().getStringExtra("ReciverImage");
-        receiverUid = getIntent().getStringExtra("ReciverUID");
+        ReceiverName = getIntent().getStringExtra("ReceiverName");
+        ReceiverImage = getIntent().getStringExtra("ReceiverImage");
+        receiverUid = getIntent().getStringExtra("ReceiverUID");
         Log.d(ChatActivity.class.getSimpleName(), "receiver name" + ReceiverName);
         Log.d(ChatActivity.class.getSimpleName(), "receiver uid" + receiverUid);
 
         //ROOMS
-        senderRoom=senderUid+receiverUid;
-        receiverRoom=receiverUid+senderUid;
+        senderRoom = senderUid + receiverUid;
+        receiverRoom = receiverUid + senderUid;
 
         Glide.with(this).load(Uri.parse(ReceiverImage)).into(receiverCircleImage);
         receiverNameTextView.setText(ReceiverName);
 
         progressBarChat.setVisibility(View.GONE);
 
-        DatabaseReference reference = database.getReference().child("user").child(firebaseAuth.getUid());
-        DatabaseReference chatReference=database.getReference().child("chats").child(senderRoom).child("messages");
+        DatabaseReference reference = database.getReference().child("user").child(firebaseAuth.getCurrentUser().getUid());
+        DatabaseReference chatReference = database.getReference().child("chats").child(senderRoom).child("messages");
         chatReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageArrayList.clear();//this is because if the message persist then those will be resend when receiver or sender sends the message.
-                for(DataSnapshot dataSnapshot:snapshot.getChildren());
-                {
-                    Message message=snapshot.getValue(Message.class);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Message message = dataSnapshot.getValue(Message.class);
                     messageArrayList.add(message);
                 }
                 messageAdapter.notifyDataSetChanged();
@@ -135,6 +128,7 @@ public class ChatActivity extends AppCompatActivity {
         chatImagePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(ChatActivity.this, "Image icon clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -171,5 +165,13 @@ public class ChatActivity extends AppCompatActivity {
                 });
             }
         });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        chatRecyclerView.setLayoutManager(linearLayoutManager);
+        if (messageArrayList == null) {
+            Toast.makeText(this, "messageArraylist is null", Toast.LENGTH_SHORT).show();
+        }
+        messageAdapter = new MessageAdapter(ChatActivity.this, messageArrayList, senderUid);
+        chatRecyclerView.setAdapter(messageAdapter);
     }
 }

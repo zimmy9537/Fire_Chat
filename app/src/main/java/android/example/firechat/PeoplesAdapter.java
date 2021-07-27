@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,9 +50,9 @@ public class PeoplesAdapter extends RecyclerView.Adapter<PeoplesAdapter.PersonVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("ReciverName", user.getName());
-                intent.putExtra("ReciverImage", user.getImageURI());
-                intent.putExtra("ReciverUID", user.getUid());
+                intent.putExtra("ReceiverName", user.getName());
+                intent.putExtra("ReceiverImage", user.getImageURI());
+                intent.putExtra("ReceiverUID", user.getUid());
                 context.startActivity(intent);
             }
         });
