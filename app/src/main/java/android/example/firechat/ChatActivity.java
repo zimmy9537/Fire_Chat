@@ -1,20 +1,19 @@
 package android.example.firechat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,7 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     private CircleImageView receiverCircleImage;
     private TextView receiverNameTextView;
     private ProgressBar progressBarChat;
-    private Button sendButton;
+    private CircleImageView sendButton;
     private EditText messageEditText;
     private RecyclerView chatRecyclerView;
 
@@ -168,10 +167,7 @@ public class ChatActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         chatRecyclerView.setLayoutManager(linearLayoutManager);
-        if (messageArrayList == null) {
-            Toast.makeText(this, "messageArraylist is null", Toast.LENGTH_SHORT).show();
-        }
-        messageAdapter = new MessageAdapter(ChatActivity.this, messageArrayList, senderUid);
+        messageAdapter = new MessageAdapter(ChatActivity.this, messageArrayList, senderUid, receiverUid);
         chatRecyclerView.setAdapter(messageAdapter);
     }
 }

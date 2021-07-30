@@ -1,35 +1,45 @@
 package android.example.firechat;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MessageAdapter extends RecyclerView.Adapter {
 
     Context context;
     ArrayList<Message> messageArrayList;
-    String senderUid;
+    String senderUid;//this is my id. I am the one who is sending the message.
+    String receiverUid;
 
-    public MessageAdapter(Context context, ArrayList<Message> messageArrayList, String senderUid) {
+    public MessageAdapter(Context context, ArrayList<Message> messageArrayList, String senderUid, String receiverUid) {
         this.context = context;
         this.messageArrayList = messageArrayList;
         if (messageArrayList == null) {
             Toast.makeText(context, "messageArraylist is empty", Toast.LENGTH_SHORT).show();
         }
         this.senderUid = senderUid;
+        this.receiverUid = receiverUid;
     }
 
     int ITEM_SEND = 1;
     int ITEM_RECEIVE = 2;
+    int DATE_CHANGED = 3;
 
 
     @NonNull
@@ -41,6 +51,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
         if (viewType == 1) {
             View view = LayoutInflater.from(context).inflate(R.layout.sender_message_item, parent, false);
             return new SenderViewHolder(view);
+        } else if (viewType == 3) {
+            View view = LayoutInflater.from(context).inflate(R.layout.date_specifier_item, parent, false);
+            return new DateViewHolder(view);
         } else {
             View view = LayoutInflater.from(context).inflate(R.layout.receiver_message_item, parent, false);
             return new ReceiverViewHolder(view);
@@ -50,12 +63,26 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Message message = messageArrayList.get(position);
+        Date currentMessageDate = new Date(message.getTimeStamp());
         if (holder.getClass() == SenderViewHolder.class) {
             SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
             senderViewHolder.senderText.setText(message.getMessage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+            String time = dateFormat.format(currentMessageDate);
+            senderViewHolder.senderTime.setText(time);
+        } else if (holder.getClass() == DateViewHolder.class) {
+            DateViewHolder dateViewHolder = (DateViewHolder) holder;
+            Log.d(ChatActivity.class.getSimpleName(), "i am here");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+            String time = dateFormat.format(currentMessageDate);
+            dateViewHolder.dateTextView.setText(time);
         } else {
+            //this is meant for the receiver class
             ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
             receiverViewHolder.receiverText.setText(message.getMessage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+            String time = dateFormat.format(currentMessageDate);
+            receiverViewHolder.receiverTime.setText(time);
         }
     }
 
@@ -64,39 +91,65 @@ public class MessageAdapter extends RecyclerView.Adapter {
         return messageArrayList.size();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int getItemViewType(int position) {
         Message messages = messageArrayList.get(position);
-        Log.d(ChatActivity.class.getSimpleName(), "we got guffed up here");
-        if (senderUid == null) {
-            Log.d(ChatActivity.class.getSimpleName(), "senderID is null");
-            return 1;
-        } else if (messages.getSenderId() == null) {//todo here is the problem.
-            Log.d(ChatActivity.class.getSimpleName(), "senderID is null 2");
-            return 1;
+        Date currentMessageDate = new Date(messages.getTimeStamp());
+        Date previousMessageDate = currentMessageDate;
+        if (position > 0) {
+            previousMessageDate = new Date(messageArrayList.get(position - 1).getTimeStamp());
         }
-        if (messages.getSenderId().trim().equals(senderUid.trim())) {
+        if (!isSameDay(previousMessageDate, currentMessageDate)) {
+            return DATE_CHANGED;
+        } else if (messages.getSenderId().trim().equals(senderUid.trim())) {
             return ITEM_SEND;
         } else {
             return ITEM_RECEIVE;
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static boolean isSameDay(Date date1, Date date2) {
+        LocalDate localDate1 = date1.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate localDate2 = date2.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        return localDate1.isEqual(localDate2);
+    }
+
     class SenderViewHolder extends RecyclerView.ViewHolder {
         private TextView senderText;
+        private TextView senderTime;
+        private RelativeLayout senderRelative;
 
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
             senderText = itemView.findViewById(R.id.sender_message);
+            senderTime = itemView.findViewById(R.id.sender_time);
+            senderRelative = itemView.findViewById(R.id.sender_message_RL);
         }
     }
 
     class ReceiverViewHolder extends RecyclerView.ViewHolder {
         private TextView receiverText;
+        private TextView receiverTime;
 
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverText = itemView.findViewById(R.id.receiver_message);
+            receiverTime = itemView.findViewById(R.id.receiver_time);
+        }
+    }
+
+    class DateViewHolder extends RecyclerView.ViewHolder {
+        private TextView dateTextView;
+
+        public DateViewHolder(@NonNull View itemView) {
+            super(itemView);
+            dateTextView = itemView.findViewById(R.id.date_specifier_textView);
         }
     }
 }

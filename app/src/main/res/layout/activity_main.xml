@@ -17,30 +17,31 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextColor="@color/myWhite"
             android:background="@color/black"
-            android:theme="@style/ThemeOverlay.AppCompat" />
+            android:theme="@style/ThemeOverlay.AppCompat"
+            app:titleTextColor="@color/myWhite" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="20dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
                 android:id="@+id/main_activity_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
             <ProgressBar
                 android:id="@+id/progress_main_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="invisible"
-                android:progressTint="@color/myWhite"/>
+                android:progressTint="@color/myWhite"
+                android:visibility="invisible" />
         </RelativeLayout>
     </LinearLayout>
 
