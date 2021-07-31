@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
-        //toolbar.setTitleTextColor(getResources().getColor(R.color.myWhite,null));
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         actionBarDrawerToggle.syncState();
     }
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.log_out:
                 auth.signOut();
-                startActivity(new Intent(MainActivity.this, InitialActivity.class));
+                startActivity(new Intent(MainActivity. this, InitialActivity.class));
                 finish();
         }
         return super.onOptionsItemSelected(item);

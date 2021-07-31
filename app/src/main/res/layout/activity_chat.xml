@@ -8,42 +8,60 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ChatActivity">
 
-    <LinearLayout
-        android:id="@+id/toolbar_ll"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_chat"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="?android:actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@color/black"
-        android:orientation="horizontal"
-        android:paddingStart="10dp">
+        android:background="@color/colorPrimaryDark"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        app:titleTextColor="@color/myWhite">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/receiverImageChat"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/circle_small"
-            android:src="@drawable/person" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/receiverNameChat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="sans-serif-medium"
-            android:paddingStart="15dp"
-            android:paddingEnd="10dp"
-            android:text="Zimmy"
-            android:textColor="@color/myWhite"
-            android:textSize="32sp" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/image_back_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/receiver_image_toolbar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/person" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/receiver_name_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="zimmy"
+                android:layout_toEndOf="@+id/image_back_ll"
+                android:textColor="@color/myWhite"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout"
-        android:layout_below="@+id/toolbar_ll"
+        android:layout_below="@+id/toolbar_chat"
         android:paddingTop="10dp"
         android:transcriptMode="alwaysScroll"
         tools:listitem="@layout/item_message" />
@@ -53,9 +71,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/log_in_edit_text"
         android:orientation="horizontal">
@@ -82,12 +100,12 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            app:civ_circle_background_color="@color/black"
-            android:enabled="true"
             android:layout_marginEnd="5dp"
+            android:enabled="true"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:src="@drawable/send_button" />
+            android:src="@drawable/send_button"
+            app:civ_circle_background_color="@color/black" />
 
     </LinearLayout>
 

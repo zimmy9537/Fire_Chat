@@ -1,17 +1,23 @@
 package android.example.firechat;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,12 +49,12 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayList<Message> messageArrayList;
     private MessageAdapter messageAdapter;
 
-    private CircleImageView receiverCircleImage;
-    private TextView receiverNameTextView;
+
     private ProgressBar progressBarChat;
     private CircleImageView sendButton;
     private EditText messageEditText;
     private RecyclerView chatRecyclerView;
+    private LinearLayout image_back;
 
 
     private String ReceiverName;
@@ -65,13 +71,12 @@ public class ChatActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        receiverCircleImage = findViewById(R.id.receiverImageChat);
-        receiverNameTextView = findViewById(R.id.receiverNameChat);
         sendButton = findViewById(R.id.sendButton);
         messageEditText = findViewById(R.id.messageEditText);
         senderUid = firebaseAuth.getCurrentUser().getUid();
         messageArrayList = new ArrayList<>();
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
+        image_back=findViewById(R.id.image_back_ll);
 
 
         //getIntents
@@ -81,14 +86,28 @@ public class ChatActivity extends AppCompatActivity {
         Log.d(ChatActivity.class.getSimpleName(), "receiver name" + ReceiverName);
         Log.d(ChatActivity.class.getSimpleName(), "receiver uid" + receiverUid);
 
+        //setting up toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar_chat);
+        setSupportActionBar(toolbar);
+        TextView toolbarName=findViewById(R.id.receiver_name_toolbar);
+        CircleImageView toolbarImage=findViewById(R.id.receiver_image_toolbar);
+        toolbarName.setText(ReceiverName);
+        Glide.with(this).load(Uri.parse(ReceiverImage)).into(toolbarImage);
+
         //ROOMS
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
 
-        Glide.with(this).load(Uri.parse(ReceiverImage)).into(receiverCircleImage);
-        receiverNameTextView.setText(ReceiverName);
 
         progressBarChat.setVisibility(View.GONE);
+
+        image_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChatActivity.this,MainActivity.class));
+                finish();
+            }
+        });
 
         DatabaseReference reference = database.getReference().child("user").child(firebaseAuth.getCurrentUser().getUid());
         DatabaseReference chatReference = database.getReference().child("chats").child(senderRoom).child("messages");
