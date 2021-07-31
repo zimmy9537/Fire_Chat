@@ -39,7 +39,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     int ITEM_SEND = 1;
     int ITEM_RECEIVE = 2;
-    int DATE_CHANGED = 3;
+    int SENDER_DATE_CHANGED = 3;
+    int RECEIVER_DATE_CHANGED = 4;
 
 
     @NonNull
@@ -51,12 +52,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
         if (viewType == 1) {
             View view = LayoutInflater.from(context).inflate(R.layout.sender_message_item, parent, false);
             return new SenderViewHolder(view);
-        } else if (viewType == 3) {
-            View view = LayoutInflater.from(context).inflate(R.layout.date_specifier_item, parent, false);
-            return new DateViewHolder(view);
-        } else {
+        } else if (viewType == 2) {
             View view = LayoutInflater.from(context).inflate(R.layout.receiver_message_item, parent, false);
             return new ReceiverViewHolder(view);
+        } else if (viewType == 3) {
+            View view = LayoutInflater.from(context).inflate(R.layout.date_changed_sender_item, parent, false);
+            return new DateSenderHolder(view);
+        } else {
+            View view = LayoutInflater.from(context).inflate(R.layout.date_changed_receiver_item, parent, false);
+            return new DateReceiverHolder(view);
         }
     }
 
@@ -70,12 +74,24 @@ public class MessageAdapter extends RecyclerView.Adapter {
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
             String time = dateFormat.format(currentMessageDate);
             senderViewHolder.senderTime.setText(time);
-        } else if (holder.getClass() == DateViewHolder.class) {
-            DateViewHolder dateViewHolder = (DateViewHolder) holder;
-            Log.d(ChatActivity.class.getSimpleName(), "i am here");
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+        } else if (holder.getClass() == DateSenderHolder.class) {
+            DateSenderHolder dateSenderHolder = (DateSenderHolder) holder;
+            dateSenderHolder.senderText.setText(message.getMessage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
             String time = dateFormat.format(currentMessageDate);
-            dateViewHolder.dateTextView.setText(time);
+            dateSenderHolder.senderTime.setText(time);
+            dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+            time = dateFormat.format(currentMessageDate);
+            dateSenderHolder.dateTextView.setText(time);
+        } else if (holder.getClass() == DateReceiverHolder.class) {
+            DateReceiverHolder dateReceiverHolder = (DateReceiverHolder) holder;
+            dateReceiverHolder.receiverText.setText(message.getMessage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+            String time = dateFormat.format(currentMessageDate);
+            dateReceiverHolder.receiverTime.setText(time);
+            dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+            time = dateFormat.format(currentMessageDate);
+            dateReceiverHolder.dateTextView.setText(time);
         } else {
             //this is meant for the receiver class
             ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
@@ -100,8 +116,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
         if (position > 0) {
             previousMessageDate = new Date(messageArrayList.get(position - 1).getTimeStamp());
         }
-        if (!isSameDay(previousMessageDate, currentMessageDate)) {
-            return DATE_CHANGED;
+        if (messages.getSenderId().equals(senderUid) && !isSameDay(previousMessageDate, currentMessageDate)) {
+            return SENDER_DATE_CHANGED;
+        } else if (messages.getSenderId().equals(receiverUid) && !isSameDay(previousMessageDate, currentMessageDate)) {
+            return RECEIVER_DATE_CHANGED;
         } else if (messages.getSenderId().trim().equals(senderUid.trim())) {
             return ITEM_SEND;
         } else {
@@ -144,12 +162,31 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class DateViewHolder extends RecyclerView.ViewHolder {
+    class DateSenderHolder extends RecyclerView.ViewHolder {
+
+        private TextView dateTextView;
+        private TextView senderText;
+        private TextView senderTime;
+
+        public DateSenderHolder(@NonNull View itemView) {
+            super(itemView);
+            senderText = itemView.findViewById(R.id.sender_message_date);
+            senderTime = itemView.findViewById(R.id.sender_time_date);
+            dateTextView = itemView.findViewById(R.id.date_specifier_textView_sender);
+        }
+    }
+
+    class DateReceiverHolder extends RecyclerView.ViewHolder {
+
+        private TextView receiverText;
+        private TextView receiverTime;
         private TextView dateTextView;
 
-        public DateViewHolder(@NonNull View itemView) {
+        public DateReceiverHolder(@NonNull View itemView) {
             super(itemView);
-            dateTextView = itemView.findViewById(R.id.date_specifier_textView);
+            dateTextView = itemView.findViewById(R.id.date_specifier_textView_receiver);
+            receiverText = itemView.findViewById(R.id.receiver_message_date);
+            receiverTime = itemView.findViewById(R.id.receiver_time_date);
         }
     }
 }
