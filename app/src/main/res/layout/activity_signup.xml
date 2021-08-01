@@ -133,6 +133,34 @@
             android:textSize="@dimen/initial_buttons" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/status_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/log_in_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/password_signup">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/status" />
+        <EditText
+            android:id="@+id/status_signup_ET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginLeft="10dp"
+            android:hint="@string/status"
+            android:maxLines="1"
+            android:textColor="@color/themeColor"
+            android:textColorHint="@color/themeColor"
+            android:textSize="@dimen/initial_buttons" />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/signUp_ll_signUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -142,7 +170,7 @@
         android:backgroundTint="@color/themeColor"
         android:background="@drawable/log_in_edit_text"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/password_signup">
+        app:layout_constraintTop_toBottomOf="@+id/status_signup">
 
         <TextView
             android:layout_width="wrap_content"

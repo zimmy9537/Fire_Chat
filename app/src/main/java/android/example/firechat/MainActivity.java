@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private PeoplesAdapter adapter;
     List<Users> usersList;
+
+    private Users currentUserJugad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     Users users = dataSnapshot.getValue(Users.class);
                     if (!users.getUid().equals(auth.getUid())) {
                         usersList.add(users);//here we keep the user outside the userList, because he can't send the message to himself.
+                    } else {
+                        currentUserJugad = users;
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -97,8 +102,16 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.log_out:
                 auth.signOut();
-                startActivity(new Intent(MainActivity. this, InitialActivity.class));
+                startActivity(new Intent(MainActivity.this, InitialActivity.class));
                 finish();
+                break;
+            case R.id.my_profile:
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.putExtra("my_name", currentUserJugad.getName());
+                intent.putExtra("my_image", currentUserJugad.getImageURI());
+                intent.putExtra("my_status",currentUserJugad.getStatus());
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

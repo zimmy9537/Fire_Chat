@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FireChat">
         <activity
+            android:name=".ProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".ReceiverDetails"
             android:exported="true" />
         <activity android:name=".ChatActivity" />

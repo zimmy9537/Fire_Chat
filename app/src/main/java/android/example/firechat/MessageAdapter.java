@@ -116,9 +116,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
         if (position > 0) {
             previousMessageDate = new Date(messageArrayList.get(position - 1).getTimeStamp());
         }
-        if (messages.getSenderId().equals(senderUid) && !isSameDay(previousMessageDate, currentMessageDate)) {
+        if ((messages.getSenderId().equals(senderUid) && !isSameDay(previousMessageDate, currentMessageDate)) || (messages.getSenderId().equals(senderUid) && position == 0)) {
             return SENDER_DATE_CHANGED;
-        } else if (messages.getSenderId().equals(receiverUid) && !isSameDay(previousMessageDate, currentMessageDate)) {
+        } else if ((messages.getSenderId().equals(receiverUid) && !isSameDay(previousMessageDate, currentMessageDate)) || messages.getSenderId().equals(receiverUid) && position == 0) {
             return RECEIVER_DATE_CHANGED;
         } else if (messages.getSenderId().trim().equals(senderUid.trim())) {
             return ITEM_SEND;

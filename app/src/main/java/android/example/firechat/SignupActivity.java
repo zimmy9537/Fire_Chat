@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -39,6 +40,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText name_et;
     private EditText email_et;
     private EditText password_et;
+    private EditText status_et;
     private LinearLayout signUp;
     private LinearLayout logIn;
     private FirebaseAuth auth;
@@ -58,6 +60,7 @@ public class SignupActivity extends AppCompatActivity {
         name_et = findViewById(R.id.name_signup_ET);
         email_et = findViewById(R.id.email_signup_ET);
         password_et = findViewById(R.id.password_signup_ET);
+        status_et=findViewById(R.id.status_signup_ET);
         signUp = findViewById(R.id.signUp_ll_signUp);
         user_image_signup = findViewById(R.id.profile_image_signup);
         logIn = findViewById(R.id.login_ll_signup);
@@ -77,6 +80,7 @@ public class SignupActivity extends AppCompatActivity {
                 final String name = name_et.getText().toString().trim();
                 final String email = email_et.getText().toString().trim();
                 final String password = password_et.getText().toString().trim();
+                String status=status_et.getText().toString().trim();
                 String emailPattern = ("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(SignupActivity.this, "email or password can not be empty", Toast.LENGTH_SHORT).show();
@@ -87,6 +91,12 @@ public class SignupActivity extends AppCompatActivity {
                     progressDialog.hide();
                     return;
                 }
+                else if(TextUtils.isEmpty(status))
+                {
+                    Toast.makeText(SignupActivity.this, "Default status set", Toast.LENGTH_SHORT).show();
+                    status="always happy as fun";
+                }
+                String finalStatus = status;
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -102,8 +112,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Uri uri) {
                                                     imageURI = uri.toString();
-                                                    Users users = new Users(auth.getUid(), name, email, imageURI);
-                                                    //todo below may create problem
+                                                    Users users = new Users(auth.getUid(), name, email, imageURI, finalStatus);
                                                     databaseReference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
@@ -136,7 +145,7 @@ public class SignupActivity extends AppCompatActivity {
                                 });
                             } else {
                                 imageURI = "https://firebasestorage.googleapis.com/v0/b/fire-chat-4dad3.appspot.com/o/user.png?alt=media&token=712b7bd1-8993-4833-ab2a-8ad8163515eb";
-                                Users users = new Users(auth.getUid(), name, email, imageURI);
+                                Users users = new Users(auth.getUid(), name, email, imageURI,finalStatus);
                                 databaseReference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {

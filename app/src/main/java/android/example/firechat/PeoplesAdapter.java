@@ -53,6 +53,7 @@ public class PeoplesAdapter extends RecyclerView.Adapter<PeoplesAdapter.PersonVi
                 intent.putExtra("ReceiverName", user.getName());
                 intent.putExtra("ReceiverImage", user.getImageURI());
                 intent.putExtra("ReceiverUID", user.getUid());
+                intent.putExtra("ReceiverStatus",user.getStatus());
                 context.startActivity(intent);
             }
         });

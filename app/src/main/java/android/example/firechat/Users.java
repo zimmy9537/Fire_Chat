@@ -2,15 +2,26 @@ package android.example.firechat;
 
 public class Users {
     private String name;
-    private String email;
-    private String imageURI;
-    private String uid;
 
-    public Users(String uid, String name, String email, String imageURI) {
+    public Users(String uid, String name, String email, String imageURI, String status) {
         this.name = name;
         this.email = email;
         this.imageURI = imageURI;
         this.uid = uid;
+        this.status = status;
+    }
+
+    private String email;
+    private String imageURI;
+    private String uid;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Users() {

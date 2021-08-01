@@ -59,6 +59,7 @@ public class ChatActivity extends AppCompatActivity {
     private String ReceiverName;
     private String ReceiverImage;
     private String receiverUid;
+    private String ReceiverStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class ChatActivity extends AppCompatActivity {
         ReceiverName = getIntent().getStringExtra("ReceiverName");
         ReceiverImage = getIntent().getStringExtra("ReceiverImage");
         receiverUid = getIntent().getStringExtra("ReceiverUID");
+        ReceiverStatus=getIntent().getStringExtra("ReceiverStatus");
         Log.d(ChatActivity.class.getSimpleName(), "receiver name" + ReceiverName);
         Log.d(ChatActivity.class.getSimpleName(), "receiver uid" + receiverUid);
 
@@ -115,6 +117,7 @@ public class ChatActivity extends AppCompatActivity {
                 Intent intent=new Intent(ChatActivity.this, ReceiverDetails.class);
                 intent.putExtra("ReceiverName",ReceiverName);
                 intent.putExtra("ReceiverImage",ReceiverImage);
+                intent.putExtra("ReceiverStatus",ReceiverStatus);
                 startActivity(intent);
             }
         });
