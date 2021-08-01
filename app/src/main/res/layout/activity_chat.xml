@@ -21,38 +21,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/image_back_ll"
+            <ImageView
+                android:paddingTop="10dp"
+                android:id="@+id/back"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:orientation="horizontal">
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back" />
 
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/back" />
+            <LinearLayout
+                android:id="@+id/Receiver_details"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/back"
+                android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/receiver_image_toolbar"
                     android:layout_width="30dp"
+                    android:gravity="center_vertical"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/person" />
-            </LinearLayout>
 
-            <TextView
-                android:layout_centerVertical="true"
-                android:id="@+id/receiver_name_toolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="zimmy"
-                android:layout_toEndOf="@+id/image_back_ll"
-                android:textColor="@color/myWhite"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/receiver_name_toolbar"
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="zimmy"
+                    android:textColor="@color/myWhite"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 

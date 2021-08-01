@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/drawable/back.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/drawable/log_in_edit_text.xml" value="0.21743589743589745" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/drawable/reciever_details.xml" value="0.21743589743589745" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_chat.xml" value="0.15670289855072464" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_main.xml" value="0.15670289855072464" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_receiver_deatails.xml" value="0.2046875" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_signup.xml" value="0.1" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/chat_toolbar.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/image_dialog.xml" value="0.1" />
       </map>

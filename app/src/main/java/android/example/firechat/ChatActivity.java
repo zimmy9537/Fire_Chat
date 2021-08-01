@@ -7,17 +7,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,7 +52,8 @@ public class ChatActivity extends AppCompatActivity {
     private CircleImageView sendButton;
     private EditText messageEditText;
     private RecyclerView chatRecyclerView;
-    private LinearLayout image_back;
+    private LinearLayout receiver_details;
+    private ImageView backImage;
 
 
     private String ReceiverName;
@@ -76,7 +75,8 @@ public class ChatActivity extends AppCompatActivity {
         senderUid = firebaseAuth.getCurrentUser().getUid();
         messageArrayList = new ArrayList<>();
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
-        image_back=findViewById(R.id.image_back_ll);
+        receiver_details =findViewById(R.id.Receiver_details);
+        backImage=findViewById(R.id.back);
 
 
         //getIntents
@@ -101,11 +101,21 @@ public class ChatActivity extends AppCompatActivity {
 
         progressBarChat.setVisibility(View.GONE);
 
-        image_back.setOnClickListener(new View.OnClickListener() {
+        backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ChatActivity.this,MainActivity.class));
                 finish();
+            }
+        });
+
+        receiver_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ChatActivity.this, ReceiverDetails.class);
+                intent.putExtra("ReceiverName",ReceiverName);
+                intent.putExtra("ReceiverImage",ReceiverImage);
+                startActivity(intent);
             }
         });
 
