@@ -57,6 +57,9 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("please Wait....");
+        progressDialog.setCancelable(false);
         name_et = findViewById(R.id.name_signup_ET);
         email_et = findViewById(R.id.email_signup_ET);
         password_et = findViewById(R.id.password_signup_ET);
@@ -67,9 +70,6 @@ public class SignupActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("please Wait....");
-        progressDialog.setCancelable(false);
 
 
         signUp.setOnClickListener(new View.OnClickListener() {

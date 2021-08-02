@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = findViewById(R.id.progress_main_layout);
+        progressBar = findViewById(R.id.progressBar_main);
         progressBar.setVisibility(View.VISIBLE);
 
         setUpToolBar();
@@ -109,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 intent.putExtra("my_name", currentUserJugad.getName());
                 intent.putExtra("my_image", currentUserJugad.getImageURI());
-                intent.putExtra("my_status",currentUserJugad.getStatus());
+                intent.putExtra("my_status", currentUserJugad.getStatus());
+                intent.putExtra("my_uid",currentUserJugad.getUid());
                 startActivity(intent);
                 break;
         }

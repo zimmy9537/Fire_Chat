@@ -36,11 +36,11 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <ProgressBar
-                android:id="@+id/progress_main_layout"
+                android:id="@+id/progressBar_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:progressTint="@color/myWhite"
+                android:progressTint="@color/colorPrimaryDark"
                 android:visibility="invisible" />
         </RelativeLayout>
     </LinearLayout>
