@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //android:progressTint="@color/colorPrimaryDark"
         progressBar = findViewById(R.id.progressBar_main);
         progressBar.setVisibility(View.VISIBLE);
 

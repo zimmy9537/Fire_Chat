@@ -7,7 +7,6 @@
 
 
     <RelativeLayout
-        android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -17,33 +16,33 @@
             android:elevation="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/log_in_edit_text"
             android:backgroundTint="#3B3B3B"
             android:orientation="vertical"
-            android:padding="5dp"
-            android:layout_centerHorizontal="true">
+            android:padding="5dp">
+
             <TextView
-                android:id="@+id/date_specifier_textView_sender"
+                android:id="@+id/date_specifier_receiver_media"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="today"
-                android:textSize="20sp"
-                android:textColor="#808080"/>
+                android:textColor="#808080"
+                android:textSize="20sp" />
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/sender_message_RL_sender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="2dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:background="@drawable/log_in_edit_text"
-            android:backgroundTint="@color/black"
             android:elevation="5dp"
             android:orientation="vertical"
             android:paddingLeft="10dp"
@@ -51,24 +50,33 @@
             android:paddingRight="10dp"
             android:paddingBottom="5dp">
 
-            <TextView
-                android:id="@+id/sender_message_date"
+            <ImageView
+                android:id="@+id/receiver_image_date_media"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300dp"
+                android:maxHeight="400dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/fire_chat"/>
+
+            <TextView
+                android:id="@+id/receiver_message_date_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxWidth="300dp"
                 android:text="the message will look lke this"
-                android:textColor="@color/myWhite"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/sender_time_date"
+                android:id="@+id/receiver_time_date_media"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:paddingRight="2dp"
                 android:text="9:00"
-                android:textColor="@color/myWhite"
+                android:textColor="@color/black"
                 android:textSize="10dp"
                 android:textStyle="italic" />
         </LinearLayout>

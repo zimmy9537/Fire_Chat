@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FireChat">
         <activity
+            android:name=".PhotoShareActivity"
+            android:exported="true" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="true" />
         <activity

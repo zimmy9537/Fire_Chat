@@ -7,7 +7,6 @@
 
 
     <RelativeLayout
-        android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -23,7 +22,7 @@
             android:padding="5dp"
             android:layout_centerHorizontal="true">
             <TextView
-                android:id="@+id/date_specifier_textView_sender"
+                android:id="@+id/date_specifier_sender_media"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="today"
@@ -33,10 +32,10 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/sender_message_RL_sender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="8dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,9 +50,18 @@
             android:paddingRight="10dp"
             android:paddingBottom="5dp">
 
-            <TextView
-                android:id="@+id/sender_message_date"
+            <ImageView
+                android:id="@+id/sender_image_media_date"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="300dp"
+                android:maxHeight="400dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/fire_chat"/>
+
+            <TextView
+                android:id="@+id/sender_message_media_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxWidth="300dp"
                 android:text="the message will look lke this"
@@ -62,7 +70,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/sender_time_date"
+                android:id="@+id/sender_time_media_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"

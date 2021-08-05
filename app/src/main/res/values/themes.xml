@@ -15,4 +15,13 @@
         <item name="android:textColor">@color/colorTitle</item>
 
     </style>
+
+    <style name="Theme.FireChat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.FireChat.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.FireChat.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

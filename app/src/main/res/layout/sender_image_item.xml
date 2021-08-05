@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sender_message_RL"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:layout_marginRight="8dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/log_in_edit_text"
+        android:backgroundTint="@color/black"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp">
+
+        <ImageView
+            android:id="@+id/sender_image_media"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="300dp"
+            android:maxHeight="400dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/fire_chat" />
+
+        <TextView
+            android:id="@+id/sender_message_media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="the message will look lke this"
+            android:textColor="@color/myWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sender_time_media"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingRight="2dp"
+            android:text="9:00"
+            android:textColor="@color/myWhite"
+            android:textSize="10dp"
+            android:textStyle="italic" />
+    </LinearLayout>
+</RelativeLayout>

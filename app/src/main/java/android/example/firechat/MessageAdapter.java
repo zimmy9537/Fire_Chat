@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -41,6 +44,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
     int ITEM_RECEIVE = 2;
     int SENDER_DATE_CHANGED = 3;
     int RECEIVER_DATE_CHANGED = 4;
+    int SENDER_IMAGE = 5;
+    int RECEIVER_IMAGE = 6;
+    int SENDER_DATE_IMAGE = 7;
+    int RECEIVER_DATE_IMAGE = 8;
 
 
     @NonNull
@@ -58,9 +65,21 @@ public class MessageAdapter extends RecyclerView.Adapter {
         } else if (viewType == 3) {
             View view = LayoutInflater.from(context).inflate(R.layout.date_changed_sender_item, parent, false);
             return new DateSenderHolder(view);
-        } else {
+        } else if (viewType == 4) {
             View view = LayoutInflater.from(context).inflate(R.layout.date_changed_receiver_item, parent, false);
             return new DateReceiverHolder(view);
+        } else if (viewType == 5) {
+            View view = LayoutInflater.from(context).inflate(R.layout.sender_image_item, parent, false);
+            return new SenderImageHolder(view);
+        } else if (viewType == 6) {
+            View view = LayoutInflater.from(context).inflate(R.layout.receiver_image_item, parent, false);
+            return new ReceiverImageHolder(view);
+        } else if (viewType == 7) {
+            View view = LayoutInflater.from(context).inflate(R.layout.sender_image_date_item, parent, false);
+            return new SenderDateImageHolder(view);
+        } else {
+            View view = LayoutInflater.from(context).inflate(R.layout.receiver_image_date_item, parent, false);
+            return new ReceiverDateImageHolder(view);
         }
     }
 
@@ -92,13 +111,41 @@ public class MessageAdapter extends RecyclerView.Adapter {
             dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
             time = dateFormat.format(currentMessageDate);
             dateReceiverHolder.dateTextView.setText(time);
-        } else {
+        } else if (holder.getClass() == ReceiverViewHolder.class) {
             //this is meant for the receiver class
             ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
             receiverViewHolder.receiverText.setText(message.getMessage());
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
             String time = dateFormat.format(currentMessageDate);
             receiverViewHolder.receiverTime.setText(time);
+        } else if (holder.getClass() == SenderImageHolder.class) {
+            SenderImageHolder senderImageHolder = (SenderImageHolder) holder;
+            senderImageHolder.senderMessage.setText(message.getMessage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+            String time = dateFormat.format(currentMessageDate);
+            Glide.with(context).load(message.getImageToShare()).into(senderImageHolder.senderImage);
+            senderImageHolder.timeTextView.setText(time);
+        } else if (holder.getClass() == ReceiverImageHolder.class) {
+            ReceiverImageHolder receiverImageHolder = (ReceiverImageHolder) holder;
+            receiverImageHolder.receiverMessage.setText(message.getMessage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+            String time = dateFormat.format(currentMessageDate);
+            receiverImageHolder.timeTextView.setText(time);
+            Glide.with(context).load(message.getImageToShare()).into(receiverImageHolder.receiverImage);
+        } else if (holder.getClass() == SenderDateImageHolder.class) {
+            SenderDateImageHolder senderDateImageHolder = (SenderDateImageHolder) holder;
+            senderDateImageHolder.senderMessage.setText(message.getMessage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+            String time = dateFormat.format(currentMessageDate);
+            senderDateImageHolder.timeTextView.setText(time);
+            Glide.with(context).load(message.getImageToShare()).into(senderDateImageHolder.senderImage);
+        } else {
+            ReceiverDateImageHolder receiverDateImageHolder = (ReceiverDateImageHolder) holder;
+            receiverDateImageHolder.receiverMessage.setText(message.getMessage());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+            String time = dateFormat.format(currentMessageDate);
+            receiverDateImageHolder.timeTextView.setText(time);
+            Glide.with(context).load(message.getImageToShare()).into(receiverDateImageHolder.receiverImage);
         }
     }
 
@@ -116,14 +163,26 @@ public class MessageAdapter extends RecyclerView.Adapter {
         if (position > 0) {
             previousMessageDate = new Date(messageArrayList.get(position - 1).getTimeStamp());
         }
-        if ((messages.getSenderId().equals(senderUid) && !isSameDay(previousMessageDate, currentMessageDate)) || (messages.getSenderId().equals(senderUid) && position == 0)) {
-            return SENDER_DATE_CHANGED;
-        } else if ((messages.getSenderId().equals(receiverUid) && !isSameDay(previousMessageDate, currentMessageDate)) || messages.getSenderId().equals(receiverUid) && position == 0) {
-            return RECEIVER_DATE_CHANGED;
-        } else if (messages.getSenderId().trim().equals(senderUid.trim())) {
-            return ITEM_SEND;
+        if (messages.getImageToShare() == null) {
+            if ((messages.getSenderId().equals(senderUid) && !isSameDay(previousMessageDate, currentMessageDate)) || (messages.getSenderId().equals(senderUid) && position == 0)) {
+                return SENDER_DATE_CHANGED;
+            } else if ((messages.getSenderId().equals(receiverUid) && !isSameDay(previousMessageDate, currentMessageDate)) || messages.getSenderId().equals(receiverUid) && position == 0) {
+                return RECEIVER_DATE_CHANGED;
+            } else if (messages.getSenderId().trim().equals(senderUid.trim())) {
+                return ITEM_SEND;
+            } else {
+                return ITEM_RECEIVE;
+            }
         } else {
-            return ITEM_RECEIVE;
+            if ((messages.getSenderId().equals(senderUid) && !isSameDay(previousMessageDate, currentMessageDate)) || (messages.getSenderId().equals(senderUid) && position == 0)) {
+                return SENDER_DATE_IMAGE;
+            } else if ((messages.getSenderId().equals(receiverUid) && !isSameDay(previousMessageDate, currentMessageDate)) || messages.getSenderId().equals(receiverUid) && position == 0) {
+                return RECEIVER_DATE_IMAGE;
+            } else if (messages.getSenderId().trim().equals(senderUid.trim())) {
+                return SENDER_IMAGE;
+            } else {
+                return RECEIVER_IMAGE;
+            }
         }
     }
 
@@ -187,6 +246,66 @@ public class MessageAdapter extends RecyclerView.Adapter {
             dateTextView = itemView.findViewById(R.id.date_specifier_textView_receiver);
             receiverText = itemView.findViewById(R.id.receiver_message_date);
             receiverTime = itemView.findViewById(R.id.receiver_time_date);
+        }
+    }
+
+    class SenderImageHolder extends RecyclerView.ViewHolder {
+
+        private TextView timeTextView;
+        private TextView senderMessage;
+        private ImageView senderImage;
+
+        public SenderImageHolder(@NonNull View itemView) {
+            super(itemView);
+            timeTextView = itemView.findViewById(R.id.sender_time_media);
+            senderMessage = itemView.findViewById(R.id.sender_message_media);
+            senderImage = itemView.findViewById(R.id.sender_image_media);
+        }
+    }
+
+    class ReceiverImageHolder extends RecyclerView.ViewHolder {
+
+        private TextView timeTextView;
+        private TextView receiverMessage;
+        private ImageView receiverImage;
+
+        public ReceiverImageHolder(@NonNull View itemView) {
+            super(itemView);
+            timeTextView = itemView.findViewById(R.id.receiver_time_media);
+            receiverMessage = itemView.findViewById(R.id.receiver_message_media);
+            receiverImage = itemView.findViewById(R.id.receiver_image_media);
+        }
+    }
+
+    class SenderDateImageHolder extends RecyclerView.ViewHolder {
+
+        private TextView timeTextView;
+        private TextView senderMessage;
+        private ImageView senderImage;
+        private TextView dateTextView;
+
+        public SenderDateImageHolder(@NonNull View itemView) {
+            super(itemView);
+            timeTextView = itemView.findViewById(R.id.sender_time_media_date);
+            senderMessage = itemView.findViewById(R.id.sender_message_media_date);
+            senderImage = itemView.findViewById(R.id.sender_image_media_date);
+            dateTextView = itemView.findViewById(R.id.date_specifier_sender_media);
+        }
+    }
+
+    class ReceiverDateImageHolder extends RecyclerView.ViewHolder {
+
+        private TextView timeTextView;
+        private TextView receiverMessage;
+        private ImageView receiverImage;
+        private TextView dateTextView;
+
+        public ReceiverDateImageHolder(@NonNull View itemView) {
+            super(itemView);
+            timeTextView = itemView.findViewById(R.id.receiver_time_date_media);
+            receiverMessage = itemView.findViewById(R.id.receiver_message_date_media);
+            receiverImage = itemView.findViewById(R.id.receiver_image_date_media);
+            dateTextView = itemView.findViewById(R.id.date_specifier_receiver_media);
         }
     }
 }

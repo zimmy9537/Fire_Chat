@@ -1,5 +1,6 @@
 package android.example.firechat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,7 +42,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private ImageButton chatImagePicker;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
     private FirebaseAuth firebaseAuth;
@@ -48,7 +52,8 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
 
 
-    private ProgressBar progressBarChat;
+    private ProgressBar progressBarChat;//findViewById components
+    private ImageButton chatImagePicker;//image picker button
     private CircleImageView sendButton;
     private EditText messageEditText;
     private RecyclerView chatRecyclerView;
@@ -60,6 +65,12 @@ public class ChatActivity extends AppCompatActivity {
     private String ReceiverImage;
     private String receiverUid;
     private String ReceiverStatus;
+
+    public ActivityResultLauncher<Intent> resultLauncher;
+    public ActivityResultLauncher<Intent> resultLauncher2;
+
+    //to be sent as an intent to the photo activity
+    private Uri imageUriToBeSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +114,7 @@ public class ChatActivity extends AppCompatActivity {
 
         progressBarChat.setVisibility(View.GONE);
 
+
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +122,10 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
+
 
         receiver_details.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +137,10 @@ public class ChatActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
 
         DatabaseReference reference = database.getReference().child("user").child(firebaseAuth.getCurrentUser().getUid());
         DatabaseReference chatReference = database.getReference().child("chats").child(senderRoom).child("messages");
@@ -141,6 +161,9 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -154,14 +177,55 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
         //todo image part is left.
+        //i am going to create a new DatabaseReference. this will be for media files.
+        //DatabaseReference databaseReference2=database.getReference().child("chats").child(senderRoom).child("mediaMessage");
         chatImagePicker = findViewById(R.id.photoPickerButton);
         chatImagePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ChatActivity.this, "Image icon clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                resultLauncher.launch(intent);
             }
         });
+
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getData() != null) {
+                        imageUriToBeSet = result.getData().getData();
+                        Intent intent=new Intent(ChatActivity.this,PhotoShareActivity.class);
+                        intent.putExtra("imageUri",imageUriToBeSet.toString());
+                        intent.putExtra("senderROOM",senderRoom);
+                        intent.putExtra("receiverROOM",receiverRoom);
+                        intent.putExtra("senderUID",senderUid);
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
+
+        resultLauncher2=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode()==Activity.RESULT_OK){
+//                    Message message=new Message();
+//                    message.setMessage(getIntent().getStringExtra("message"));
+//                    message.setImageToShare(getIntent().getStringExtra("photoUrlString"));
+//                    message.setTimeStamp(getIntent().getLongExtra("timeStamp",100));
+//                    message.setSenderId(getIntent().getStringExtra("senderUID"));
+                    Toast.makeText(ChatActivity.this, "Image shared", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +238,7 @@ public class ChatActivity extends AppCompatActivity {
                 messageEditText.setText("");
                 Date date = new Date();
 
-                Message messages = new Message(message, senderUid, date.getTime());
+                Message messages = new Message(message, senderUid, date.getTime(),null);
                 database.getReference().child("chats")
                         .child(senderRoom)
                         .child("messages")
@@ -196,6 +260,7 @@ public class ChatActivity extends AppCompatActivity {
                 });
             }
         });
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         chatRecyclerView.setLayoutManager(linearLayoutManager);

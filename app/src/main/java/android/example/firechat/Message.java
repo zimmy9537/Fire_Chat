@@ -5,15 +5,23 @@ public class Message {
     private String message;
     private String senderId;
     private long timeStamp;
+    private String ImageToShare;
 
     public Message() {
-
     }
 
-    public Message(String message, String senderId, long timeStamp) {
+    public Message(String message, String senderId, long timeStamp, String imageToShare) {
         this.message = message;
         this.senderId = senderId;
         this.timeStamp = timeStamp;
+        ImageToShare = imageToShare;
+    }
+    public String getImageToShare() {
+        return ImageToShare;
+    }
+
+    public void setImageToShare(String imageToShare) {
+        ImageToShare = imageToShare;
     }
 
     public String getMessage() {

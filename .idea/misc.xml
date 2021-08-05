@@ -12,15 +12,21 @@
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/drawable/status.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_chat.xml" value="0.15670289855072464" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_main.xml" value="0.15670289855072464" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_photo_share.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_profile.xml" value="0.22" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_receiver_deatails.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_receiver_details.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/activity_signup.xml" value="0.22" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/chat_toolbar.xml" value="0.2046875" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/content_photo_share.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/date_changed_receiver_item.xml" value="0.1" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/date_changed_sender_item.xml" value="0.1" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/image_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/receiver_image_date_item.xml" value="0.2046875" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/receiver_image_item.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/receiver_message_item.xml" value="0.1" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/sender_image_date_item.xml" value="0.2046875" />
+        <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/sender_image_item.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/sender_message_item.xml" value="0.1" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/update_dialogue.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/update_name_dialogue.xml" value="0.2046875" />
