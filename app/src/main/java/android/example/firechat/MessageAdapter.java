@@ -1,6 +1,7 @@
 package android.example.firechat;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -123,7 +124,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             senderImageHolder.senderMessage.setText(message.getMessage());
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
             String time = dateFormat.format(currentMessageDate);
-            Glide.with(context).load(message.getImageToShare()).into(senderImageHolder.senderImage);
+            Glide.with(context).load(Uri.parse(message.getImageToShare())).into(senderImageHolder.senderImage);
             senderImageHolder.timeTextView.setText(time);
         } else if (holder.getClass() == ReceiverImageHolder.class) {
             ReceiverImageHolder receiverImageHolder = (ReceiverImageHolder) holder;
@@ -131,21 +132,21 @@ public class MessageAdapter extends RecyclerView.Adapter {
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
             String time = dateFormat.format(currentMessageDate);
             receiverImageHolder.timeTextView.setText(time);
-            Glide.with(context).load(message.getImageToShare()).into(receiverImageHolder.receiverImage);
+            Glide.with(context).load(Uri.parse(message.getImageToShare())).into(receiverImageHolder.receiverImage);
         } else if (holder.getClass() == SenderDateImageHolder.class) {
             SenderDateImageHolder senderDateImageHolder = (SenderDateImageHolder) holder;
             senderDateImageHolder.senderMessage.setText(message.getMessage());
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
             String time = dateFormat.format(currentMessageDate);
             senderDateImageHolder.timeTextView.setText(time);
-            Glide.with(context).load(message.getImageToShare()).into(senderDateImageHolder.senderImage);
+            Glide.with(context).load(Uri.parse(message.getImageToShare())).into(senderDateImageHolder.senderImage);
         } else {
             ReceiverDateImageHolder receiverDateImageHolder = (ReceiverDateImageHolder) holder;
             receiverDateImageHolder.receiverMessage.setText(message.getMessage());
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
             String time = dateFormat.format(currentMessageDate);
             receiverDateImageHolder.timeTextView.setText(time);
-            Glide.with(context).load(message.getImageToShare()).into(receiverDateImageHolder.receiverImage);
+            Glide.with(context).load(Uri.parse(message.getImageToShare())).into(receiverDateImageHolder.receiverImage);
         }
     }
 
