@@ -1,20 +1,18 @@
 package android.example.firechat;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,46 +25,52 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private RecyclerView personRecyclerView;
     private FirebaseDatabase database;
     private PeoplesAdapter adapter;
     List<Users> usersList;
+    private ImageView profileImage;
+    private TextView profileName;
+    private LinearLayout profileLayout;
 
-    private Users currentUserJugad;
+    private Users currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //android:progressTint="@color/colorPrimaryDark"
         progressBar = findViewById(R.id.progressBar_main);
         progressBar.setVisibility(View.VISIBLE);
 
-        setUpToolBar();
+        profileImage=findViewById(R.id.my_image);
+        profileName=findViewById(R.id.my_name);
+        profileLayout=findViewById(R.id.my_profile);
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
         usersList = new ArrayList<>();
 
+        DatabaseReference userReference = database.getReference().child("user");
 
-        DatabaseReference reference = database.getReference().child("user");
-
-        reference.addValueEventListener(new ValueEventListener() {
+        userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Users users = dataSnapshot.getValue(Users.class);
-                    if (!users.getUid().equals(auth.getUid())) {
-                        usersList.add(users);//here we keep the user outside the userList, because he can't send the message to himself.
+                    Users user = dataSnapshot.getValue(Users.class);
+                    assert user != null;
+                    if (!user.getUid().equals(auth.getUid())) {
+                        usersList.add(user);//here we keep the user outside the userList, because he can't send the message to himself.
                     } else {
-                        currentUserJugad = users;
+                        currentUser = user;
+                        profileName.setText(currentUser.getName());
+                        Glide.with(MainActivity.this).load(currentUser.getImageURI()).into(profileImage);
                     }
                 }
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
 
@@ -79,41 +83,6 @@ public class MainActivity extends AppCompatActivity {
         personRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PeoplesAdapter(MainActivity.this, usersList);
         personRecyclerView.setAdapter(adapter);
-        progressBar.setVisibility(View.GONE);
     }
 
-    private void setUpToolBar() {
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
-        actionBarDrawerToggle.syncState();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.log_out:
-                auth.signOut();
-                startActivity(new Intent(MainActivity.this, InitialActivity.class));
-                finish();
-                break;
-            case R.id.my_profile:
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                intent.putExtra("my_name", currentUserJugad.getName());
-                intent.putExtra("my_image", currentUserJugad.getImageURI());
-                intent.putExtra("my_status", currentUserJugad.getStatus());
-                intent.putExtra("my_uid",currentUserJugad.getUid());
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

@@ -5,6 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
@@ -13,13 +14,33 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
+            android:id="@+id/my_profile"
             android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            android:background="@color/colorPrimaryDark"
-            android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
-            app:titleTextColor="@color/myWhite" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="35dp"
+            android:paddingEnd="35dp"
+            android:layout_marginTop="25dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/my_image"
+                android:src="@drawable/person"/>
+
+            <TextView
+                android:id="@+id/my_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="27sp"
+                android:text="Zimmy Changela"
+                android:textColor="@color/myWhite"/>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -31,8 +52,6 @@
                 android:id="@+id/main_activity_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <ProgressBar
@@ -44,11 +63,4 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

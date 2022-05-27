@@ -17,8 +17,6 @@
             android:elevation="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/log_in_edit_text"
-            android:backgroundTint="#3B3B3B"
             android:orientation="vertical"
             android:padding="5dp"
             android:layout_centerHorizontal="true">
@@ -27,7 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="today"
-                android:textSize="20sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="12sp"
                 android:textColor="#808080"/>
         </LinearLayout>
     </RelativeLayout>
@@ -42,8 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/log_in_edit_text"
-            android:backgroundTint="@color/black"
+            android:background="@drawable/chat_back_me"
             android:elevation="5dp"
             android:orientation="vertical"
             android:paddingLeft="10dp"
@@ -55,18 +53,18 @@
                 android:id="@+id/sender_message_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
                 android:maxWidth="300dp"
                 android:text="the message will look lke this"
                 android:textColor="@color/myWhite"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/sender_time_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:paddingRight="2dp"
+                android:paddingEnd="2dp"
                 android:text="9:00"
                 android:textColor="@color/myWhite"
                 android:textSize="10dp"

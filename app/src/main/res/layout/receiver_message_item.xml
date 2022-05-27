@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:background="@drawable/log_in_edit_text"
+        android:background="@drawable/chat_back_their"
         android:elevation="5dp"
         android:orientation="vertical"
         android:paddingLeft="10dp"
@@ -24,18 +24,18 @@
             android:layout_height="wrap_content"
             android:maxWidth="300dp"
             android:text="the message will look lke this"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@color/myWhite"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_light"/>
 
         <TextView
             android:id="@+id/receiver_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingRight="2dp"
+            android:paddingEnd="2dp"
             android:text="9:00"
-            android:textColor="@color/black"
+            android:textColor="@color/myWhite"
             android:textSize="10dp"
             android:textStyle="italic" />
     </LinearLayout>

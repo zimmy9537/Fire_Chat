@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +54,9 @@ public class ChatActivity extends AppCompatActivity {
 
 
     private ProgressBar progressBarChat;//findViewById components
-    private ImageButton chatImagePicker;//image picker button
-    private CircleImageView sendButton;
+    private RelativeLayout chatImagePicker;//image picker button
+    private RelativeLayout sendButton;
+    private RelativeLayout sendButton2;
     private EditText messageEditText;
     private RecyclerView chatRecyclerView;
     private LinearLayout receiver_details;
@@ -83,6 +85,7 @@ public class ChatActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         sendButton = findViewById(R.id.sendButton);
+        sendButton2=findViewById(R.id.sendButton2);
         messageEditText = findViewById(R.id.messageEditText);
         senderUid = firebaseAuth.getCurrentUser().getUid();
         messageArrayList = new ArrayList<>();

@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/receiver_message_RL"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginTop="2dp">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/image_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/log_in_edit_text"
-        android:elevation="5dp"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp">
+        app:cardCornerRadius="20dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp">
 
         <ImageView
             android:id="@+id/receiver_image_media"
@@ -27,14 +24,31 @@
             android:adjustViewBounds="true"
             android:src="@drawable/fire_chat"/>
 
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_ll"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/chat_back_their"
+        android:elevation="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp">
+
         <TextView
             android:id="@+id/receiver_message_media"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
             android:maxWidth="300dp"
             android:text="the message will look lke this"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textColor="@color/myWhite"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <TextView
@@ -42,9 +56,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingRight="2dp"
+            android:paddingEnd="2dp"
             android:text="9:00"
-            android:textColor="@color/black"
+            android:textColor="@color/myWhite"
             android:textSize="10dp"
             android:textStyle="italic" />
     </LinearLayout>

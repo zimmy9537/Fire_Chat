@@ -31,10 +31,34 @@
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/update_dialogue.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/update_name_dialogue.xml" value="0.2046875" />
         <entry key="..\:/Users/baps/AndroidStudioProjects/FireChat/app/src/main/res/layout/update_status_dialogue.xml" value="0.2046875" />
+        <entry key="app/src/main/res/drawable/back.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/chat_back.xml" value="0.1495" />
+        <entry key="app/src/main/res/drawable/chat_back_me.xml" value="0.1495" />
+        <entry key="app/src/main/res/drawable/email.xml" value="0.1495" />
+        <entry key="app/src/main/res/drawable/image_back.xml" value="0.1495" />
+        <entry key="app/src/main/res/drawable/log_in_edit_text.xml" value="0.1495" />
+        <entry key="app/src/main/res/drawable/union.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.21150054931640633" />
+        <entry key="app/src/main/res/layout/activity_entry.xml" value="0.14322916666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/date_changed_receiver_item.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/date_changed_sender_item.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/header.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_message.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_person_main_activity.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/receiver_image_date_item.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/receiver_image_item.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/receiver_message_item.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/sender_image_date_item.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/sender_image_item.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/sender_message_item.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/update_name_dialogue.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/menu/drawer_menu.xml" value="0.29791666666666666" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.29791666666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
